@@ -34,6 +34,9 @@ defmodule Iona.Template do
 
   defp eval(body, assigns, options \\ []) do
     opts = options |> Keyword.put(:engine, Iona.Template.Engine)
+    IO.inspect opts
+    IO.inspect body
+    IO.inspect assigns
     EEx.eval_string(body, [assigns: assigns], opts)
     |> unwrap
   end

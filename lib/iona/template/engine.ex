@@ -59,12 +59,14 @@ defmodule Iona.Template.Engine do
   defp to_safe(expr, line) do
     # Keep stacktraces for protocol dispatch...
     fallback = quote line: line, do: Iona.Template.Engine.to_iodata(other)
-
+    
     # However ignore them for the generated clauses to avoid warnings
-    quote line: -1 do
+    quote line: 0 do
       case unquote(expr) do
-        {:safe, data} -> data
-        bin when is_binary(bin) -> Iona.Template.Engine.escape(bin)
+        {:safe, data} -> IO.inspect data 
+                         data
+        bin when is_binary(bin) -> IO.inspect bin
+                                   Iona.Template.Engine.escape(bin)
         other -> unquote(fallback)
       end
     end
